@@ -23,7 +23,7 @@ class RadarTest {
     private ExecutorService executorServiceMock;
 
     @BeforeEach
-    void prepare() {
+    void start() {
         when(executorServiceMock.submit(any(Runnable.class))).thenAnswer(invocation -> {
             ((Runnable) invocation.getArgument(0)).run();
             return null;
@@ -32,27 +32,36 @@ class RadarTest {
 
     @RepeatedTest(20)
     void whenNoMissiles_dontLaunchPatriots() {
+        Scud missile = new Scud();
         final int batteryCount = 0;
         BetterRadar radar = new BetterRadar(executorServiceMock, batteryMock, batteryCount);
-        Scud missile = new Scud();
         radar.notice(missile);
         verify(batteryMock, times(batteryCount)).launchPatriot(missile);
     }
 
     @RepeatedTest(20)
     void whenMissiles_launchPatriot_once() {
+        Scud missile = new Scud();
         final int batteryCount = 1;
         BetterRadar radar = new BetterRadar(executorServiceMock, batteryMock, batteryCount);
-        Scud missile = new Scud();
         radar.notice(missile);
         verify(batteryMock, times(batteryCount)).launchPatriot(missile);
     }
 
     @RepeatedTest(20)
     void whenMissiles_launchPatriot_tenTimes() {
+        Scud missile = new Scud();
         final int batteryCount = 10;
         BetterRadar radar = new BetterRadar(executorServiceMock, batteryMock, batteryCount);
+        radar.notice(missile);
+        verify(batteryMock, times(batteryCount)).launchPatriot(missile);
+    }
+
+    @RepeatedTest(20)
+    void whenMissiles_launchPatriot_hundredTimes() {
         Scud missile = new Scud();
+        final int batteryCount = 100;
+        BetterRadar radar = new BetterRadar(executorServiceMock, batteryMock, batteryCount);
         radar.notice(missile);
         verify(batteryMock, times(batteryCount)).launchPatriot(missile);
     }
