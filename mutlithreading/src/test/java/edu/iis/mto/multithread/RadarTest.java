@@ -13,12 +13,4 @@ class RadarTest {
     @Mock
     private PatriotBattery batteryMock;
 
-    @Test
-    void launchPatriotOnceWhenNoticesAScudMissle() {
-        Radar radar = new Radar(batteryMock);
-        Scud enemyMissle = new Scud();
-        radar.notice(enemyMissle);
-        verify(batteryMock).launchPatriot(enemyMissle);
-    }
-
 }
