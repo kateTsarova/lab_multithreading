@@ -34,8 +34,26 @@ class RadarTest {
     void whenNoMissiles_dontLaunchPatriots() {
         final int batteryCount = 0;
         BetterRadar radar = new BetterRadar(executorServiceMock, batteryMock, batteryCount);
-        Scud enemyMissile = new Scud();
-        radar.notice(enemyMissile);
-        verify(batteryMock, times(batteryCount)).launchPatriot(enemyMissile);
+        Scud missile = new Scud();
+        radar.notice(missile);
+        verify(batteryMock, times(batteryCount)).launchPatriot(missile);
+    }
+
+    @RepeatedTest(20)
+    void whenMissiles_launchPatriot_once() {
+        final int batteryCount = 1;
+        BetterRadar radar = new BetterRadar(executorServiceMock, batteryMock, batteryCount);
+        Scud missile = new Scud();
+        radar.notice(missile);
+        verify(batteryMock, times(batteryCount)).launchPatriot(missile);
+    }
+
+    @RepeatedTest(20)
+    void whenMissiles_launchPatriot_tenTimes() {
+        final int batteryCount = 10;
+        BetterRadar radar = new BetterRadar(executorServiceMock, batteryMock, batteryCount);
+        Scud missile = new Scud();
+        radar.notice(missile);
+        verify(batteryMock, times(batteryCount)).launchPatriot(missile);
     }
 }
